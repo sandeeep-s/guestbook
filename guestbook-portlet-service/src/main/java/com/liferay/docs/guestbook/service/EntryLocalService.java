@@ -304,6 +304,10 @@ public interface EntryLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int getEntriesCount(long groupId, long guestbookId)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntries(
         long groupId, long guestbookId, int status, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException;

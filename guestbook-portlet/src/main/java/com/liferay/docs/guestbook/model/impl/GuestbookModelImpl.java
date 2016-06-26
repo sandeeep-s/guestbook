@@ -2,9 +2,11 @@ package com.liferay.docs.guestbook.model.impl;
 
 import com.liferay.docs.guestbook.model.Guestbook;
 import com.liferay.docs.guestbook.model.GuestbookModel;
+import com.liferay.docs.guestbook.model.GuestbookSoap;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -23,8 +25,10 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +44,7 @@ import java.util.Map;
  * @see com.liferay.docs.guestbook.model.GuestbookModel
  * @generated
  */
+@JSON(strict = true)
 public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
     implements GuestbookModel {
     /*
@@ -116,6 +121,56 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
     private Guestbook _escapedModel;
 
     public GuestbookModelImpl() {
+    }
+
+    /**
+     * Converts the soap model instance into a normal model instance.
+     *
+     * @param soapModel the soap model instance to convert
+     * @return the normal model instance
+     */
+    public static Guestbook toModel(GuestbookSoap soapModel) {
+        if (soapModel == null) {
+            return null;
+        }
+
+        Guestbook model = new GuestbookImpl();
+
+        model.setUuid(soapModel.getUuid());
+        model.setGuestbookId(soapModel.getGuestbookId());
+        model.setGroupId(soapModel.getGroupId());
+        model.setCompanyId(soapModel.getCompanyId());
+        model.setUserId(soapModel.getUserId());
+        model.setUserName(soapModel.getUserName());
+        model.setCreateDate(soapModel.getCreateDate());
+        model.setModifiedDate(soapModel.getModifiedDate());
+        model.setName(soapModel.getName());
+        model.setStatus(soapModel.getStatus());
+        model.setStatusByUserId(soapModel.getStatusByUserId());
+        model.setStatusByUserName(soapModel.getStatusByUserName());
+        model.setStatusDate(soapModel.getStatusDate());
+
+        return model;
+    }
+
+    /**
+     * Converts the soap model instances into normal model instances.
+     *
+     * @param soapModels the soap model instances to convert
+     * @return the normal model instances
+     */
+    public static List<Guestbook> toModels(GuestbookSoap[] soapModels) {
+        if (soapModels == null) {
+            return null;
+        }
+
+        List<Guestbook> models = new ArrayList<Guestbook>(soapModels.length);
+
+        for (GuestbookSoap soapModel : soapModels) {
+            models.add(toModel(soapModel));
+        }
+
+        return models;
     }
 
     @Override
@@ -250,6 +305,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         }
     }
 
+    @JSON
     @Override
     public String getUuid() {
         if (_uuid == null) {
@@ -272,6 +328,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         return GetterUtil.getString(_originalUuid);
     }
 
+    @JSON
     @Override
     public long getGuestbookId() {
         return _guestbookId;
@@ -282,6 +339,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _guestbookId = guestbookId;
     }
 
+    @JSON
     @Override
     public long getGroupId() {
         return _groupId;
@@ -304,6 +362,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         return _originalGroupId;
     }
 
+    @JSON
     @Override
     public long getCompanyId() {
         return _companyId;
@@ -326,6 +385,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         return _originalCompanyId;
     }
 
+    @JSON
     @Override
     public long getUserId() {
         return _userId;
@@ -346,6 +406,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _userUuid = userUuid;
     }
 
+    @JSON
     @Override
     public String getUserName() {
         if (_userName == null) {
@@ -360,6 +421,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _userName = userName;
     }
 
+    @JSON
     @Override
     public Date getCreateDate() {
         return _createDate;
@@ -370,6 +432,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _createDate = createDate;
     }
 
+    @JSON
     @Override
     public Date getModifiedDate() {
         return _modifiedDate;
@@ -380,6 +443,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _modifiedDate = modifiedDate;
     }
 
+    @JSON
     @Override
     public String getName() {
         if (_name == null) {
@@ -394,6 +458,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _name = name;
     }
 
+    @JSON
     @Override
     public int getStatus() {
         return _status;
@@ -416,6 +481,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         return _originalStatus;
     }
 
+    @JSON
     @Override
     public long getStatusByUserId() {
         return _statusByUserId;
@@ -437,6 +503,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _statusByUserUuid = statusByUserUuid;
     }
 
+    @JSON
     @Override
     public String getStatusByUserName() {
         if (_statusByUserName == null) {
@@ -451,6 +518,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
         _statusByUserName = statusByUserName;
     }
 
+    @JSON
     @Override
     public Date getStatusDate() {
         return _statusDate;

@@ -4,6 +4,7 @@ import com.liferay.docs.guestbook.service.ClpSerializer;
 import com.liferay.docs.guestbook.service.EntryLocalServiceUtil;
 import com.liferay.docs.guestbook.service.EntryServiceUtil;
 import com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil;
+import com.liferay.docs.guestbook.service.GuestbookServiceUtil;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -25,6 +26,8 @@ public class ClpMessageListener extends BaseMessageListener {
 
             EntryServiceUtil.clearService();
             GuestbookLocalServiceUtil.clearService();
+
+            GuestbookServiceUtil.clearService();
         }
     }
 }

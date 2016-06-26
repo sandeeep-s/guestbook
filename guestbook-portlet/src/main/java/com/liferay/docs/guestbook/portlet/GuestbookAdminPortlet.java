@@ -4,7 +4,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import com.liferay.docs.guestbook.model.Guestbook;
-import com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil;
+import com.liferay.docs.guestbook.service.GuestbookServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -26,7 +26,7 @@ public class GuestbookAdminPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(request, "name");
 
 		try {
-			GuestbookLocalServiceUtil.addGuestbook(serviceContext.getUserId(), name, serviceContext);
+			GuestbookServiceUtil.addGuestbook(serviceContext.getUserId(), name, serviceContext);
 
 			SessionMessages.add(request, "guestbookAdded");
 		} catch (PortalException e) {
@@ -45,7 +45,7 @@ public class GuestbookAdminPortlet extends MVCPortlet {
 		long guestbookId = ParamUtil.getLong(request, "guestbookId");
 
 		try {
-			GuestbookLocalServiceUtil.updateGuestbook(serviceContext.getUserId(), guestbookId, name, serviceContext);
+			GuestbookServiceUtil.updateGuestbook(serviceContext.getUserId(), guestbookId, name, serviceContext);
 
 			SessionMessages.add(request, "guestbookUpdated");
 		} catch (PortalException pe) {
@@ -64,7 +64,7 @@ public class GuestbookAdminPortlet extends MVCPortlet {
     long guestbookId = ParamUtil.getLong(request, "guestbookId");
 
     try {
-            GuestbookLocalServiceUtil.deleteGuestbook(guestbookId, serviceContext);
+            GuestbookServiceUtil.deleteGuestbook(guestbookId, serviceContext);
 
             SessionMessages.add(request, "guestbookDeleted");
     } catch (PortalException pe) {

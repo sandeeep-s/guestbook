@@ -5,5 +5,6 @@
 	<bean id="com.liferay.docs.guestbook.service.EntryService" class="com.liferay.docs.guestbook.service.impl.EntryServiceImpl" />
 	<bean id="com.liferay.docs.guestbook.service.persistence.EntryPersistence" class="com.liferay.docs.guestbook.service.persistence.EntryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.docs.guestbook.service.GuestbookLocalService" class="com.liferay.docs.guestbook.service.impl.GuestbookLocalServiceImpl" />
+	<bean id="com.liferay.docs.guestbook.service.GuestbookService" class="com.liferay.docs.guestbook.service.impl.GuestbookServiceImpl" />
 	<bean id="com.liferay.docs.guestbook.service.persistence.GuestbookPersistence" class="com.liferay.docs.guestbook.service.persistence.GuestbookPersistenceImpl" parent="basePersistence" />
 </beans>

@@ -347,6 +347,12 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
     }
 
     @Override
+    public int getEntriesCount(long groupId, long guestbookId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.getEntriesCount(groupId, guestbookId);
+    }
+
+    @Override
     public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntries(
         long groupId, long guestbookId, int status, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {

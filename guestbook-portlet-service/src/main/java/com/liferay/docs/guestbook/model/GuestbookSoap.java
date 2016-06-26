@@ -7,9 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.docs.guestbook.service.http.GuestbookServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.docs.guestbook.service.http.GuestbookServiceSoap
  * @generated
  */
 public class GuestbookSoap implements Serializable {

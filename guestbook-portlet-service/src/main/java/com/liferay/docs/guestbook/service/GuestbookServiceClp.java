@@ -6,7 +6,7 @@ import com.liferay.portal.service.InvokableService;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class EntryServiceClp implements EntryService {
+public class GuestbookServiceClp implements GuestbookService {
     private InvokableService _invokableService;
     private String _methodName0;
     private String[] _methodParameterTypes0;
@@ -25,7 +25,7 @@ public class EntryServiceClp implements EntryService {
     private String _methodName8;
     private String[] _methodParameterTypes8;
 
-    public EntryServiceClp(InvokableService invokableService) {
+    public GuestbookServiceClp(InvokableService invokableService) {
         _invokableService = invokableService;
 
         _methodName0 = "getBeanIdentifier";
@@ -36,36 +36,36 @@ public class EntryServiceClp implements EntryService {
 
         _methodParameterTypes1 = new String[] { "java.lang.String" };
 
-        _methodName3 = "addEntry";
+        _methodName3 = "addGuestbook";
 
         _methodParameterTypes3 = new String[] {
-                "long", "long", "java.lang.String", "java.lang.String",
-                "java.lang.String", "com.liferay.portal.service.ServiceContext"
+                "long", "java.lang.String",
+                "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName4 = "deleteEntry";
+        _methodName4 = "deleteGuestbook";
 
         _methodParameterTypes4 = new String[] {
                 "long", "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName5 = "getEntries";
+        _methodName5 = "getGuestbooks";
 
-        _methodParameterTypes5 = new String[] { "long", "long" };
+        _methodParameterTypes5 = new String[] { "long" };
 
-        _methodName6 = "getEntries";
+        _methodName6 = "getGuestbooks";
 
-        _methodParameterTypes6 = new String[] { "long", "long", "int", "int" };
+        _methodParameterTypes6 = new String[] { "long", "int", "int" };
 
-        _methodName7 = "getEntriesCount";
+        _methodName7 = "getGuestbooksCount";
 
-        _methodParameterTypes7 = new String[] { "long", "long" };
+        _methodParameterTypes7 = new String[] { "long" };
 
-        _methodName8 = "updateEntry";
+        _methodName8 = "updateGuestbook";
 
         _methodParameterTypes8 = new String[] {
-                "long", "long", "long", "java.lang.String", "java.lang.String",
-                "java.lang.String", "com.liferay.portal.service.ServiceContext"
+                "long", "long", "java.lang.String",
+                "com.liferay.portal.service.ServiceContext"
             };
     }
 
@@ -116,9 +116,8 @@ public class EntryServiceClp implements EntryService {
     }
 
     @Override
-    public com.liferay.docs.guestbook.model.Entry addEntry(long userId,
-        long guestbookId, java.lang.String name, java.lang.String email,
-        java.lang.String message,
+    public com.liferay.docs.guestbook.model.Guestbook addGuestbook(
+        long userId, java.lang.String name,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
@@ -130,13 +129,7 @@ public class EntryServiceClp implements EntryService {
                     new Object[] {
                         userId,
                         
-                    guestbookId,
-                        
                     ClpSerializer.translateInput(name),
-                        
-                    ClpSerializer.translateInput(email),
-                        
-                    ClpSerializer.translateInput(message),
                         
                     ClpSerializer.translateInput(serviceContext)
                     });
@@ -159,11 +152,12 @@ public class EntryServiceClp implements EntryService {
             }
         }
 
-        return (com.liferay.docs.guestbook.model.Entry) ClpSerializer.translateOutput(returnObj);
+        return (com.liferay.docs.guestbook.model.Guestbook) ClpSerializer.translateOutput(returnObj);
     }
 
     @Override
-    public com.liferay.docs.guestbook.model.Entry deleteEntry(long entryId,
+    public com.liferay.docs.guestbook.model.Guestbook deleteGuestbook(
+        long guestbookId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
@@ -173,7 +167,7 @@ public class EntryServiceClp implements EntryService {
             returnObj = _invokableService.invokeMethod(_methodName4,
                     _methodParameterTypes4,
                     new Object[] {
-                        entryId,
+                        guestbookId,
                         
                     ClpSerializer.translateInput(serviceContext)
                     });
@@ -196,19 +190,18 @@ public class EntryServiceClp implements EntryService {
             }
         }
 
-        return (com.liferay.docs.guestbook.model.Entry) ClpSerializer.translateOutput(returnObj);
+        return (com.liferay.docs.guestbook.model.Guestbook) ClpSerializer.translateOutput(returnObj);
     }
 
     @Override
-    public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntries(
-        long groupId, long guestbookId)
+    public java.util.List<com.liferay.docs.guestbook.model.Guestbook> getGuestbooks(
+        long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
             returnObj = _invokableService.invokeMethod(_methodName5,
-                    _methodParameterTypes5,
-                    new Object[] { groupId, guestbookId });
+                    _methodParameterTypes5, new Object[] { groupId });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -224,19 +217,18 @@ public class EntryServiceClp implements EntryService {
             }
         }
 
-        return (java.util.List<com.liferay.docs.guestbook.model.Entry>) ClpSerializer.translateOutput(returnObj);
+        return (java.util.List<com.liferay.docs.guestbook.model.Guestbook>) ClpSerializer.translateOutput(returnObj);
     }
 
     @Override
-    public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntries(
-        long groupId, long guestbookId, int start, int end)
+    public java.util.List<com.liferay.docs.guestbook.model.Guestbook> getGuestbooks(
+        long groupId, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
             returnObj = _invokableService.invokeMethod(_methodName6,
-                    _methodParameterTypes6,
-                    new Object[] { groupId, guestbookId, start, end });
+                    _methodParameterTypes6, new Object[] { groupId, start, end });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -252,18 +244,17 @@ public class EntryServiceClp implements EntryService {
             }
         }
 
-        return (java.util.List<com.liferay.docs.guestbook.model.Entry>) ClpSerializer.translateOutput(returnObj);
+        return (java.util.List<com.liferay.docs.guestbook.model.Guestbook>) ClpSerializer.translateOutput(returnObj);
     }
 
     @Override
-    public int getEntriesCount(long groupId, long guestbookId)
+    public int getGuestbooksCount(long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
             returnObj = _invokableService.invokeMethod(_methodName7,
-                    _methodParameterTypes7,
-                    new Object[] { groupId, guestbookId });
+                    _methodParameterTypes7, new Object[] { groupId });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -283,9 +274,8 @@ public class EntryServiceClp implements EntryService {
     }
 
     @Override
-    public com.liferay.docs.guestbook.model.Entry updateEntry(long userId,
-        long guestbookId, long entryId, java.lang.String name,
-        java.lang.String email, java.lang.String message,
+    public com.liferay.docs.guestbook.model.Guestbook updateGuestbook(
+        long userId, long guestbookId, java.lang.String name,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
@@ -299,13 +289,7 @@ public class EntryServiceClp implements EntryService {
                         
                     guestbookId,
                         
-                    entryId,
-                        
                     ClpSerializer.translateInput(name),
-                        
-                    ClpSerializer.translateInput(email),
-                        
-                    ClpSerializer.translateInput(message),
                         
                     ClpSerializer.translateInput(serviceContext)
                     });
@@ -328,6 +312,6 @@ public class EntryServiceClp implements EntryService {
             }
         }
 
-        return (com.liferay.docs.guestbook.model.Entry) ClpSerializer.translateOutput(returnObj);
+        return (com.liferay.docs.guestbook.model.Guestbook) ClpSerializer.translateOutput(returnObj);
     }
 }

@@ -53,6 +53,8 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected EntryPersistence entryPersistence;
     @BeanReference(type = com.liferay.docs.guestbook.service.GuestbookLocalService.class)
     protected com.liferay.docs.guestbook.service.GuestbookLocalService guestbookLocalService;
+    @BeanReference(type = com.liferay.docs.guestbook.service.GuestbookService.class)
+    protected com.liferay.docs.guestbook.service.GuestbookService guestbookService;
     @BeanReference(type = GuestbookPersistence.class)
     protected GuestbookPersistence guestbookPersistence;
     @BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
@@ -426,6 +428,25 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
     public void setGuestbookLocalService(
         com.liferay.docs.guestbook.service.GuestbookLocalService guestbookLocalService) {
         this.guestbookLocalService = guestbookLocalService;
+    }
+
+    /**
+     * Returns the guestbook remote service.
+     *
+     * @return the guestbook remote service
+     */
+    public com.liferay.docs.guestbook.service.GuestbookService getGuestbookService() {
+        return guestbookService;
+    }
+
+    /**
+     * Sets the guestbook remote service.
+     *
+     * @param guestbookService the guestbook remote service
+     */
+    public void setGuestbookService(
+        com.liferay.docs.guestbook.service.GuestbookService guestbookService) {
+        this.guestbookService = guestbookService;
     }
 
     /**

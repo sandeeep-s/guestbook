@@ -58,6 +58,10 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return entryPersistence.findByG_G(groupId, guestbookId, start, end);
 	}
 
+	public int getEntriesCount(long groupId, long guestbookId) throws SystemException {
+	    return entryPersistence.countByG_G(groupId, guestbookId);
+	}
+	
 	public List<Entry> getEntries(long groupId, long guestbookId, int status, int start, int end)
 			throws SystemException {
 		return entryPersistence.findByG_G_S(groupId, guestbookId, WorkflowConstants.STATUS_APPROVED, start, end);
