@@ -22,7 +22,7 @@
 <aui:nav cssClass="nav-tabs">
 
 	<%
-		List<Guestbook> guestbooks = GuestbookLocalServiceUtil.getGuestbooks(scopeGroupId);
+		List<Guestbook> guestbooks = GuestbookLocalServiceUtil.getGuestbooks(scopeGroupId, WorkflowConstants.STATUS_APPROVED);
 			for (Guestbook curGuestbook : guestbooks) {
 				String cssClass = StringPool.BLANK;
 
@@ -69,10 +69,20 @@
 </aui:button-row>
 
 <liferay-ui:search-container>
-	<liferay-ui:search-container-results results="<%=EntryLocalServiceUtil.getEntries(scopeGroupId, guestbookId, searchContainer.getStart(),searchContainer.getEnd())%>" total="<%=EntryLocalServiceUtil.getEntriesCount()%>" />
+<liferay-ui:search-container-results
+    results="<%=EntryLocalServiceUtil.getEntries(scopeGroupId,
+              guestbookId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
+              searchContainer.getEnd())%>"
+    total="<%=EntryLocalServiceUtil.getEntriesCount(scopeGroupId,
+    		guestbookId, WorkflowConstants.STATUS_APPROVED)%>" />
 	<liferay-ui:search-container-row className="com.liferay.docs.guestbook.model.Entry" modelVar="entry">
 
-		<liferay-ui:search-container-column-text property="message" />
+		<portlet:renderURL var="viewEntry">
+		        <portlet:param name="mvcPath" value="/html/guestbook/view_entry.jsp" />
+		        <portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+		</portlet:renderURL>
+		
+		<liferay-ui:search-container-column-text property="message" href="<%= viewEntry %>"/>
 
 		<liferay-ui:search-container-column-text property="name" />
 

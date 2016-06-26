@@ -347,6 +347,20 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
     }
 
     @Override
+    public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntries(
+        long groupId, long guestbookId, int status, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.getEntries(groupId, guestbookId, status,
+            start, end);
+    }
+
+    @Override
+    public int getEntriesCount(long groupId, long guestbookId, int status)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.getEntriesCount(groupId, guestbookId, status);
+    }
+
+    @Override
     public com.liferay.docs.guestbook.model.Entry addEntry(long userId,
         long guestbookId, java.lang.String name, java.lang.String email,
         java.lang.String message,
@@ -374,6 +388,26 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
             com.liferay.portal.kernel.exception.SystemException {
         return _entryLocalService.updateEntry(userId, guestbookId, entryId,
             name, email, message, serviceContext);
+    }
+
+    @Override
+    public com.liferay.docs.guestbook.model.Entry updateStatus(long userId,
+        long guestbookId, long entryId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.updateStatus(userId, guestbookId, entryId,
+            status, serviceContext);
+    }
+
+    @Override
+    public com.liferay.docs.guestbook.model.Entry updateStatus(long userId,
+        long entryId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.updateStatus(userId, entryId, status,
+            serviceContext);
     }
 
     /**

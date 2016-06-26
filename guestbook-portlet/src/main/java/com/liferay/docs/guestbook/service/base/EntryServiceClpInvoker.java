@@ -9,30 +9,30 @@ import java.util.Arrays;
  * @generated
  */
 public class EntryServiceClpInvoker {
-    private String _methodName22;
-    private String[] _methodParameterTypes22;
-    private String _methodName23;
-    private String[] _methodParameterTypes23;
+    private String _methodName32;
+    private String[] _methodParameterTypes32;
+    private String _methodName33;
+    private String[] _methodParameterTypes33;
 
     public EntryServiceClpInvoker() {
-        _methodName22 = "getBeanIdentifier";
+        _methodName32 = "getBeanIdentifier";
 
-        _methodParameterTypes22 = new String[] {  };
+        _methodParameterTypes32 = new String[] {  };
 
-        _methodName23 = "setBeanIdentifier";
+        _methodName33 = "setBeanIdentifier";
 
-        _methodParameterTypes23 = new String[] { "java.lang.String" };
+        _methodParameterTypes33 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
         Object[] arguments) throws Throwable {
-        if (_methodName22.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes22, parameterTypes)) {
+        if (_methodName32.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes32, parameterTypes)) {
             return EntryServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName23.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes23, parameterTypes)) {
+        if (_methodName33.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes33, parameterTypes)) {
             EntryServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

@@ -12,10 +12,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLinkConstants;
 
 /**
  * The implementation of the entry local service.
@@ -23,7 +28,7 @@ import com.liferay.portal.service.ServiceContext;
  * <p>
  * All custom service methods should be put in this class. Whenever methods are
  * added, rerun ServiceBuilder to copy their definitions into the
- * {@link com.tutorial.guestbook.service.EntryLocalService} interface.
+ * {@link com.liferay.docs.guestbook.service.EntryLocalService} interface.
  *
  * <p>
  * This is a local service. Methods of this service will not have security
@@ -32,16 +37,16 @@ import com.liferay.portal.service.ServiceContext;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.tutorial.guestbook.service.base.EntryLocalServiceBaseImpl
- * @see com.tutorial.guestbook.service.EntryLocalServiceUtil
+ * @see com.liferay.docs.guestbook.service.base.EntryLocalServiceBaseImpl
+ * @see com.liferay.docs.guestbook.service.EntryLocalServiceUtil
  */
 public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link
-	 * com.tutorial.guestbook.service.EntryLocalServiceUtil} to access the entry
-	 * local service.
+	 * com.liferay.docs.guestbook.service.EntryLocalServiceUtil} to access the
+	 * entry local service.
 	 */
 	public List<Entry> getEntries(long groupId, long guestbookId) throws SystemException {
 
@@ -51,6 +56,15 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	public List<Entry> getEntries(long groupId, long guestbookId, int start, int end) throws SystemException {
 
 		return entryPersistence.findByG_G(groupId, guestbookId, start, end);
+	}
+
+	public List<Entry> getEntries(long groupId, long guestbookId, int status, int start, int end)
+			throws SystemException {
+		return entryPersistence.findByG_G_S(groupId, guestbookId, WorkflowConstants.STATUS_APPROVED, start, end);
+	}
+
+	public int getEntriesCount(long groupId, long guestbookId, int status) throws SystemException {
+		return entryPersistence.countByG_G_S(groupId, guestbookId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	protected void validate(String name, String email, String entry) throws PortalException {
@@ -93,14 +107,25 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entry.setName(name);
 		entry.setEmail(email);
 		entry.setMessage(message);
+		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		entryPersistence.update(entry);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, Entry.class.getName(), entryId, false,
 				true, true);
 
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId, groupId, entry.getCreateDate(),
+				entry.getModifiedDate(), Entry.class.getName(), entryId, entry.getUuid(), 0,
+				serviceContext.getAssetCategoryIds(), serviceContext.getAssetTagNames(), true, null, null, null,
+				ContentTypes.TEXT_HTML, entry.getMessage(), null, null, null, null, 0, 0, null, false);
+
+		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(), serviceContext.getAssetLinkEntryIds(),
+				AssetLinkConstants.TYPE_RELATED);
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Entry.class);
 		indexer.reindex(entry);
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
+				Entry.class.getName(), entry.getPrimaryKey(), entry, serviceContext);
 
 		return entry;
 
@@ -112,10 +137,16 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(serviceContext.getCompanyId(), Entry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL, entryId);
 
-		entry = deleteEntry(entryId);
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(Entry.class.getName(), entryId);
+
+		assetLinkLocalService.deleteLinks(assetEntry.getEntryId());
+
+		assetEntryLocalService.deleteEntry(assetEntry);
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Entry.class);
 		indexer.delete(entry);
+
+		entry = deleteEntry(entryId);
 
 		return entry;
 	}
@@ -144,9 +175,68 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		resourceLocalService.updateResources(user.getCompanyId(), groupId, Entry.class.getName(), entryId,
 				serviceContext.getGroupPermissions(), serviceContext.getGuestPermissions());
 
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId, groupId, entry.getCreateDate(),
+				entry.getModifiedDate(), Entry.class.getName(), entryId, entry.getUuid(), 0,
+				serviceContext.getAssetCategoryIds(), serviceContext.getAssetTagNames(), true, null, null, null,
+				ContentTypes.TEXT_HTML, entry.getMessage(), null, null, null, null, 0, 0, null, false);
+
+		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(), serviceContext.getAssetLinkEntryIds(),
+				AssetLinkConstants.TYPE_RELATED);
+
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Entry.class);
 		indexer.reindex(entry);
 
 		return entry;
 	}
+
+	public Entry updateStatus(long userId, long guestbookId, long entryId, int status, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+
+		User user = userLocalService.getUser(userId);
+		Entry entry = getEntry(entryId);
+
+		entry.setStatus(status);
+		entry.setStatusByUserId(userId);
+		entry.setStatusByUserName(user.getFullName());
+		entry.setStatusDate(new Date());
+
+		entryPersistence.update(entry);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+
+			assetEntryLocalService.updateVisible(Entry.class.getName(), entryId, true);
+
+		} else {
+
+			assetEntryLocalService.updateVisible(Entry.class.getName(), entryId, false);
+		}
+
+		return entry;
+	}
+
+	public Entry updateStatus(long userId, long entryId, int status, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+
+		User user = userLocalService.getUser(userId);
+		Entry entry = getEntry(entryId);
+
+		entry.setStatus(status);
+		entry.setStatusByUserId(userId);
+		entry.setStatusByUserName(user.getFullName());
+		entry.setStatusDate(new Date());
+
+		entryPersistence.update(entry);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+
+			assetEntryLocalService.updateVisible(Entry.class.getName(), entryId, true);
+
+		} else {
+
+			assetEntryLocalService.updateVisible(Entry.class.getName(), entryId, false);
+		}
+
+		return entry;
+	}
+
 }
