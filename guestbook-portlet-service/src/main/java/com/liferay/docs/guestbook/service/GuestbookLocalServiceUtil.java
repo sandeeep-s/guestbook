@@ -380,6 +380,14 @@ public class GuestbookLocalServiceUtil {
                    .updateStatus(userId, guestbookId, status, serviceContext);
     }
 
+    public static com.liferay.docs.guestbook.model.Guestbook getGuestbookByG_N(
+        long groupId, java.lang.String name,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.docs.guestbook.NoSuchGuestbookException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().getGuestbookByG_N(groupId, name, orderByComparator);
+    }
+
     public static void clearService() {
         _service = null;
     }

@@ -416,6 +416,13 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
             serviceContext);
     }
 
+    @Override
+    public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntriesByG_G_N(
+        long groupId, long guestbookId, java.lang.String name)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.getEntriesByG_G_N(groupId, guestbookId, name);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

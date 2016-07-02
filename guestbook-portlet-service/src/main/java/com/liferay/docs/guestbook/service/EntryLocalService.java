@@ -346,4 +346,9 @@ public interface EntryLocalService extends BaseLocalService,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntriesByG_G_N(
+        long groupId, long guestbookId, java.lang.String name)
+        throws com.liferay.portal.kernel.exception.SystemException;
 }

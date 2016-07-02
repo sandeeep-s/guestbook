@@ -72,6 +72,8 @@ public class EntryLocalServiceClp implements EntryLocalService {
     private String[] _methodParameterTypes31;
     private String _methodName32;
     private String[] _methodParameterTypes32;
+    private String _methodName33;
+    private String[] _methodParameterTypes33;
 
     public EntryLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -236,6 +238,12 @@ public class EntryLocalServiceClp implements EntryLocalService {
         _methodParameterTypes32 = new String[] {
                 "long", "long", "int",
                 "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName33 = "getEntriesByG_G_N";
+
+        _methodParameterTypes33 = new String[] {
+                "long", "long", "java.lang.String"
             };
     }
 
@@ -1226,5 +1234,39 @@ public class EntryLocalServiceClp implements EntryLocalService {
         }
 
         return (com.liferay.docs.guestbook.model.Entry) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<com.liferay.docs.guestbook.model.Entry> getEntriesByG_G_N(
+        long groupId, long guestbookId, java.lang.String name)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName33,
+                    _methodParameterTypes33,
+                    new Object[] {
+                        groupId,
+                        
+                    guestbookId,
+                        
+                    ClpSerializer.translateInput(name)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<com.liferay.docs.guestbook.model.Entry>) ClpSerializer.translateOutput(returnObj);
     }
 }

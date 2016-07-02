@@ -6,11 +6,13 @@
 
 <portlet:actionURL name="addGuestbook" var="addGuestbookURL" />
 
+<liferay-ui:error key="existing-guestbook" message="existing-guestbook" />
+
 <aui:form action="<%=addGuestbookURL%>" name="<portlet:namespace/>fm">
 
 	<aui:fieldset>
 	
-		<aui:input name="name" />
+		<aui:input name="guestbookName" />
 	
 	</aui:fieldset>
 	

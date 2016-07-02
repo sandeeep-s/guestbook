@@ -59,9 +59,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	}
 
 	public int getEntriesCount(long groupId, long guestbookId) throws SystemException {
-	    return entryPersistence.countByG_G(groupId, guestbookId);
+		return entryPersistence.countByG_G(groupId, guestbookId);
 	}
-	
+
 	public List<Entry> getEntries(long groupId, long guestbookId, int status, int start, int end)
 			throws SystemException {
 		return entryPersistence.findByG_G_S(groupId, guestbookId, WorkflowConstants.STATUS_APPROVED, start, end);
@@ -241,6 +241,11 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		}
 
 		return entry;
+	}
+
+	public List<Entry> getEntriesByG_G_N(long groupId, long guestbookId, String name) throws SystemException {
+
+		return entryPersistence.findByG_G_N(groupId, guestbookId, name);
 	}
 
 }

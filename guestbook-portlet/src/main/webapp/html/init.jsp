@@ -40,17 +40,15 @@
 <%@page import="com.liferay.portal.kernel.log.LogFactoryUtil"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.HashMap"%>
-
 <%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil"%>
 <%@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil"%>
-
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry"%>
 <%@ page import="com.liferay.portlet.asset.model.AssetTag"%>
-
 <%@ page import="com.liferay.portal.kernel.util.ListUtil"%>
-
-
-<%@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants"%>
+<%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
+<%@ page import="com.liferay.portal.kernel.util.OrderByComparatorFactory"%>
+<%@ page import="com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil"%>
 
 <portlet:defineObjects />
 <theme:defineObjects />
